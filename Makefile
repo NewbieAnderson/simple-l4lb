@@ -6,20 +6,18 @@ all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 	mkdir -p $(INSTALL_DIR)
 	cp src/$(TARGET_MODULE) $(INSTALL_DIR)/
-	rm -f *.cmd
-	rm -f *.swp
-	rm -f *.symvers
-	rm -f *.order
-	rm -f *.Module*
-	rm -f *.modules*
-	rm -f *.Module.symvers.cmd
-	rm -f *.modules.order.cmd
-	rm -f *.Makefile.swp
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	find . -name '*.o' -type f -delete
+	find . -name '*.mod.c' -type f -delete
+	find . -name '*.ko' -type f -delete
+	find . -name 'Module.symvers' -type f -delete
+	find . -name 'modules.order' -type f -delete
+	find . -name '.modules.order.cmd' -type f -delete
+	find . -name '*.mod' -type f -delete
+	find . -name '*.cmd' -type f -delete
+	find . -name '*.o.cmd' -type f -delete
+	find . -name '*.mod.o.cmd' -type f -delete
+	find . -name '*.mod.cmd' -type f -delete
+	find . -name '*.ko.cmd' -type f -delete
 	rm -rf $(INSTALL_DIR)
-	rm -f *~
-	rm -f *.o
-	rm -f *.cmd
-	rm -f *.mod.c *.symvers *.order
