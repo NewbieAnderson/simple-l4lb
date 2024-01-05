@@ -42,7 +42,7 @@ struct lb_server_session *insert_to_table(u32 client_ipv4_addr, u16 client_port)
         g_table_index = (g_table_index + 1) % g_max_table_size;
     g_session_table[g_table_index].client_ipv4_addr = client_ipv4_addr;
     g_session_table[g_table_index].client_port = client_port;
-    g_session_table[g_table_index].forward_server_port = ; //forward_server_port;
+    g_session_table[g_table_index].forward_server_port = ; // TODO : forward_server_port;
     update_session_timestamp(&g_session_table[g_table_index]);
     ++g_session_count;
     ++g_table_index;
@@ -80,8 +80,8 @@ struct lb_server_session *find_table(u32 client_ipv4_addr, u16 client_port)
 inline int update_session_timestamp(struct lb_server_session *session_ptr)
 {
     if (session_ptr == NULL || session_ptr < g_session_table ||
-        session_ptr >= g_session_table + sizeof(struct lb_server_session) * g_max_table_size)
+        session_ptr >= g_session_table + g_max_table_size)
         return -1;
-    //getnstimeofday(&session_ptr->latest_processed_packet_timestamp);
+    session_ptr->latest_processed_packet_timestamp = ktime_to_ns(ktime_get());
     return 0;
 }
